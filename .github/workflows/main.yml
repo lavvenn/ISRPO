@@ -1,0 +1,34 @@
+name: CI/CD Lab 5
+
+# Определяем события, запускающие workflow
+on:
+  push:
+    branches: [ "*" ]  # Запуск при пуше в любую ветку
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    
+    # Настраиваем матрицу для запуска на Ubuntu и Windows
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      # Шаг 1: Клонирование репозитория
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Шаг 2: Установка Python нужной версии
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Шаг 3: Запуск unit-тестов через встроенный модуль unittest
+      - name: Run unit tests
+        run: |
+          python -m unittest test_geometry.py
