@@ -1,10 +1,9 @@
 import math
 
+def area(radius: float) -> float:
+    """Площадь круга"""
+    return math.pi * (radius ** 2)
 
-def area(r):
-    return math.pi * r * r
-
-
-def perimeter(r):
-    return 2 * math.pi * r
-
+def perimeter(radius: float) -> float:
+    """Длина окружности (периметр)"""
+    return 2 * math.pi * radius
